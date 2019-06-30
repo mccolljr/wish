@@ -1,10 +1,4 @@
-package genie
-
-import (
-	"net/http"
-
-	"github.com/go-chi/chi"
-)
+package wish
 
 // A Provider is a function that will return a Context
 // to be used for handling a server request.
@@ -23,16 +17,3 @@ type Context interface {
 type ContextImpl struct{}
 
 func (*ContextImpl) context() {}
-
-// Param attempts to look up a parameter on the request from the following
-// sources, in order of priority:
-// 1. URL Parameter
-// 2. Query
-// 3. Post Form (if applicable)
-func (c ContextImpl) Param(r *http.Request, key string) string {
-	if got := chi.URLParam(r, key); got != "" {
-		return got
-	}
-
-	return r.FormValue(key)
-}

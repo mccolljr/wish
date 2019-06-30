@@ -1,4 +1,4 @@
-package genie_test
+package wish_test
 
 import (
 	"io/ioutil"
@@ -7,14 +7,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mccolljr/genie"
+	"github.com/mccolljr/wish"
 )
 
 type M = map[string]string
 
 type ServerContext struct {
-	genie.ContextImpl
-	genie.UtilityFuncs
+	wish.ContextImpl
+	wish.UtilityFuncs
 }
 
 func (c *ServerContext) HandleRoot(w http.ResponseWriter, r *http.Request) {
@@ -34,9 +34,9 @@ func (c *ServerContext) MountWeb() http.Handler {
 }
 
 func TestServer(t *testing.T) {
-	s, err := genie.Bootstrap(func() (genie.Context, error) {
+	s, err := wish.Bootstrap(func() (wish.Context, error) {
 		return &ServerContext{}, nil
-	}, genie.DoLog, func(next http.Handler) http.Handler {
+	}, wish.DoLog, func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("X-Golang-Test", "1")
 			next.ServeHTTP(w, r)
