@@ -1,0 +1,8 @@
+# local directories
+
+# build directories
+
+# editor and os files
+.DS_Store
+*.swp
+
