@@ -14,7 +14,7 @@ type M = map[string]string
 
 type ServerContext struct {
 	genie.ContextImpl
-	t *testing.T
+	genie.UtilityFuncs
 }
 
 func (c *ServerContext) HandleRoot(w http.ResponseWriter, r *http.Request) {
@@ -35,7 +35,7 @@ func (c *ServerContext) MountWeb() http.Handler {
 
 func TestServer(t *testing.T) {
 	s, err := genie.Bootstrap(func() (genie.Context, error) {
-		return &ServerContext{t: t}, nil
+		return &ServerContext{}, nil
 	}, genie.DoLog, func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("X-Golang-Test", "1")
