@@ -91,7 +91,7 @@ func TestBootstrapInvalidType(t *testing.T) {
 		t.Fatal("expected error, got nil")
 	}
 
-	expected := "bootstrap: expected pointer to a struct, got struct { *genie.ContextImpl }"
+	expected := "bootstrap: expected pointer to a struct, got struct { *wish.ContextImpl }"
 	if err.Error() != expected {
 		t.Fatalf("expected %q, got %q", expected, err)
 	}

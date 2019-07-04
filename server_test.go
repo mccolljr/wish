@@ -14,7 +14,7 @@ type M = map[string]string
 
 type ServerContext struct {
 	wish.ContextImpl
-	wish.UtilityFuncs
+	wish.RequestUtils
 }
 
 func (c *ServerContext) HandleRoot(w http.ResponseWriter, r *http.Request) {
@@ -22,11 +22,11 @@ func (c *ServerContext) HandleRoot(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *ServerContext) GetJSON(w http.ResponseWriter, r *http.Request) {
-	c.JSON(w, 200, M{"a": "1"})
+	c.RespondJSON(w, 200, M{"a": "1"})
 }
 
 func (c *ServerContext) GetError(w http.ResponseWriter, r *http.Request) {
-	c.Error(w, 405)
+	c.RespondError(w, 405)
 }
 
 func (c *ServerContext) MountWeb() http.Handler {

@@ -52,12 +52,7 @@ func Bootstrap(p Provider, mids ...MiddlewareFunc) (*Server, error) {
 
 	entrySorter := func(list []methodEntry) func(int, int) bool {
 		return func(a, b int) bool {
-			av, bv := list[a], list[b]
-			al, bl := len(av.name), len(bv.name)
-			if al == bl {
-				return av.name < bv.name
-			}
-			return al < bl
+			return list[a].name < list[b].name
 		}
 	}
 
@@ -116,7 +111,11 @@ func parseHandler(name string) (prefix, pattern string, ok bool) {
 	prefix, spec, param := match[1], match[2], match[3]
 	sections := parseSections(spec)
 	if param != "" {
-		sections = append(sections, "{"+strings.ToLower(param)+"}")
+		if param == "Wildcard" {
+			sections = append(sections, "*")
+		} else {
+			sections = append(sections, "{"+strings.ToLower(param)+"}")
+		}
 	}
 	pattern = "/" + strings.Join(sections, "/")
 	return strings.ToUpper(prefix), pattern, true
